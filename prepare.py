@@ -16,14 +16,14 @@ def clean_data(df):
     df = pd.concat([df, species_dummies], axis=1)
     return df
 
-def split(df):
+def split(df, stratify=None):
     '''
     This takes in one df and returns train, validate, and test.
     '''
-    train_validate, test = train_test_split(df, test_size=.2, random_state=123)
+    train_validate, test = train_test_split(df, test_size=.2, random_state=123, stratify=df[stratify])
     train, validate = train_test_split(train_validate, 
                                        test_size=.3, 
-                                       random_state=123) 
+                                       random_state=123, stratify=train_validate[stratify]) 
     return train, validate, test
 
 def prep_iris(df):
