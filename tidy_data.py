@@ -15,10 +15,16 @@ attendance
 # Using melt to narrow a wide data set
 attendance = pd.melt(attendance, id_vars = 'Unnamed: 0',
         var_name = 'date',
-        value_name= 'count')
+        value_name= 'grade')
 
 # Using rename to clear up a column name
 attendance = attendance.rename(columns={'Unnamed: 0': 'student'})
+
+# Assigning numerical values
+attendance = attendance.replace({'P': 1, 'A': 0, 'H': 0.5, 'T': 0.9})
+
+# Using groupby student and find mean of 'value'
+attendance.groupby('student').grade.mean()
 
 # 2. Coffee Levels
 
@@ -72,6 +78,7 @@ temp_rating = cake_df.groupby('temp').rating.mean()
 
 #### Which combination of recipe, rack position, and temperature gives the best result? 
 
+# Using sort_values and ascending to determine the highest rating
 highest_rating = cake_df.sort_values(['rating'], ascending=[False])
 highest_rating.head(1)
 
